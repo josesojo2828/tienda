@@ -1,6 +1,6 @@
 <%- include('../layouts/header', { title: 'Modificar publicación - GEEK STORE' }) %>
 
-<div class="form-layout-centered">
+<div class="form-layout-fb">
 
   <!-- Alerta de Errores de Validación -->
   <% if (error) { %>
@@ -9,90 +9,91 @@
         <i class="fa-solid fa-triangle-exclamation"></i>
       </div>
       <div class="ml-alert-content">
-        <h4>Hubo un problema al actualizar la publicación</h4>
+        <h4>Error al actualizar la publicación</h4>
         <p><%= error %></p>
       </div>
     </div>
   <% } %>
 
-  <!-- Formulario de Edición Estilo Mercado Libre -->
-  <div class="form-card">
+  <!-- Formulario de Edición Estilo Facebook Marketplace -->
+  <div class="form-card-fb">
     
-    <div class="form-header-box">
-      <h1 class="form-header-title">Modificar publicación</h1>
-      <p class="form-header-subtitle">Actualiza las especificaciones técnicas, precio o inventario de tu artículo para mantener informados a tus clientes.</p>
+    <div class="form-header-fb">
+      <h1 class="form-title-fb">Modificar publicación</h1>
+      <p class="form-subtitle-fb">Actualiza el precio, descripción o disponibilidad de tu artículo en el Marketplace.</p>
     </div>
 
     <form action="/products/<%= product.id %>/edit" method="POST" autocomplete="off">
-      <div class="form-grid">
+      <div class="form-body-fb">
         
         <!-- Nombre del Producto -->
-        <div class="form-group">
-          <label for="name" class="form-label">Título de la publicación *</label>
+        <div class="form-group-fb">
+          <label for="name" class="form-label-fb">Título *</label>
           <input 
             type="text" 
             id="name" 
             name="name" 
-            class="form-control-input" 
+            class="form-control-fb" 
             value="<%= product.name %>"
             required
             minlength="3"
           >
-          <span class="form-help-text">Recordá que si el título cambia radicalmente, los motores de búsqueda tardarán más en indexarlo.</span>
         </div>
 
         <!-- Fila de Precio y Stock -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <!-- Precio -->
-          <div class="form-group">
-            <label for="price" class="form-label">Precio ($ USD) *</label>
+          <div class="form-group-fb">
+            <label for="price" class="form-label-fb">Precio ($ USD) *</label>
             <input 
               type="number" 
               id="price" 
               name="price" 
-              class="form-control-input" 
+              class="form-control-fb" 
               step="0.01" 
               min="0.01" 
               value="<%= product.price %>"
               required
             >
-            <span class="form-help-text">El valor final de venta del producto.</span>
           </div>
 
           <!-- Stock -->
-          <div class="form-group">
-            <label for="stock" class="form-label">Cantidad en inventario *</label>
+          <div class="form-group-fb">
+            <label for="stock" class="form-label-fb">Cantidad (Stock) *</label>
             <input 
               type="number" 
               id="stock" 
               name="stock" 
-              class="form-control-input" 
+              class="form-control-fb" 
               step="1" 
               min="0" 
               value="<%= product.stock %>"
               required
             >
-            <span class="form-help-text">Cantidad física que disponés para entrega inmediata.</span>
           </div>
         </div>
 
         <!-- Descripción -->
-        <div class="form-group">
-          <label for="description" class="form-label">Descripción técnica</label>
+        <div class="form-group-fb">
+          <label for="description" class="form-label-fb">Descripción</label>
           <textarea 
             id="description" 
             name="description" 
-            class="form-control-textarea"
+            class="form-control-fb" 
+            placeholder="Describe el estado de tu artículo, especificaciones técnicas o cualquier detalle relevante."
           ><%= product.description || '' %></textarea>
-          <span class="form-help-text">Describe las especificaciones técnicas completas de tu producto gaming.</span>
+        </div>
+
+        <!-- Ubicación Simulada Fija -->
+        <div class="form-group-fb" style="background-color: var(--fb-input-bg); border-color: transparent;">
+          <label class="form-label-fb">Ubicación del artículo</label>
+          <input type="text" class="form-control-fb" value="Caracas, Distrito Capital" style="color: var(--fb-text-gray); cursor: not-allowed;" readonly>
         </div>
 
         <!-- Botones de Acción -->
-        <div class="form-actions-row">
-          <a href="/products/<%= product.id %>" class="btn-ml-link">Cancelar edición</a>
-          <button type="submit" class="btn-ml-primary">
-            <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
-          </button>
+        <div class="form-actions-fb">
+          <a href="/products/<%= product.id %>" class="btn-form-cancel-fb">Cancelar</a>
+          <button type="submit" class="btn-form-submit-fb">Guardar cambios</button>
         </div>
 
       </div>

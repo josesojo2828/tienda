@@ -1,18 +1,12 @@
 <%- include('../layouts/header', { title: product.name + ' - GEEK STORE' }) %>
 
-<!-- Migas de Pan Estilo Mercado Libre -->
-<div style="font-size: 13px; color: var(--ml-text-gray); margin-bottom: 20px;">
-  <a href="/products" style="color: var(--ml-text-gray);">Volver al listado</a> 
-  <span style="color: var(--ml-text-light); margin: 0 8px;">|</span>
-  <a href="#" style="color: var(--ml-text-gray);">Computación</a> > 
-  <a href="#" style="color: var(--ml-text-gray);">Accesorios para PC</a> > 
-  <span style="color: var(--ml-text-dark); font-weight: 500;"><%= product.name %></span>
-</div>
-
-<div class="product-detail-card">
+<div class="product-detail-layout-fb">
   
-  <!-- Columna Izquierda: Galería y Descripción del Vendedor -->
-  <div class="detail-left-column">
+  <!-- Lado Izquierdo: Canvas Oscuro de Imagen con Botón Atrás -->
+  <div class="detail-gallery-canvas-fb">
+    <a href="/products" class="detail-back-button-fb" title="Volver al listado">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
     
     <% 
       // Selección dinámica de la misma imagen de Unsplash según palabras clave en el nombre del producto
@@ -26,162 +20,99 @@
         imageUrl = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=60";
       }
     %>
-    <!-- Contenedor de la Imagen Principal -->
-    <div class="detail-gallery-box">
-      <img src="<%= imageUrl %>" alt="<%= product.name %>">
-    </div>
-
-    <!-- Descripción Comercial -->
-    <div class="detail-description-section">
-      <h2 class="detail-description-title">Descripción</h2>
-      <p class="detail-description-text">
-        <%= product.description ? product.description : 'El vendedor no proporcionó una descripción comercial detallada de este artículo.' %>
-      </p>
-    </div>
-
+    <img src="<%= imageUrl %>" alt="<%= product.name %>" class="detail-gallery-image-fb">
   </div>
 
-  <!-- Columna Derecha: Caja de Compra y Reputación del Vendedor -->
-  <div class="detail-right-column">
-    
-    <!-- Caja de Compra -->
-    <div class="purchase-box">
-      <div class="purchase-state">
-        Nuevo | +100 vendidos
+  <!-- Lado Derecho: Sidebar Blanco de Información Detallada -->
+  <aside class="detail-info-sidebar-fb">
+    <div class="sidebar-content-fb">
+      
+      <!-- Metadatos de Publicación -->
+      <div class="detail-meta-fb">
+        Publicado hace 3 horas en Caracas
       </div>
       
-      <h1 class="purchase-title"><%= product.name %></h1>
+      <!-- Título de la Publicación -->
+      <h1 class="detail-title-fb"><%= product.name %></h1>
       
-      <div class="purchase-price-box">
-        <span class="purchase-price">$ <%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
-        <div class="purchase-price-installments">
-          en <span>12x $ <%= (product.price / 12).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span> sin interés
-        </div>
+      <!-- Precio de Impacto -->
+      <div class="detail-price-fb">
+        $ <%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
       </div>
 
-      <!-- Envío e Información de Devolución -->
-      <div class="purchase-info-row shipping">
-        <i class="fa-solid fa-truck-fast"></i>
-        <div>
-          <span class="info-text-main">Envío gratis a todo el país</span>
-          <p class="info-text-sub">Conocé los tiempos y las formas de envío.</p>
-        </div>
-      </div>
-
-      <div class="purchase-info-row return">
-        <i class="fa-solid fa-rotate-left"></i>
-        <div>
-          <span class="info-text-main">Devolución gratis</span>
-          <p class="info-text-sub">Tenés 30 días desde que lo recibís para devolverlo.</p>
-        </div>
-      </div>
-
-      <!-- Control de Stock -->
-      <div class="stock-selector-container">
-        <span class="stock-selector-label">Stock disponible:</span>
-        <% if (product.stock > 0) { %>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <span class="stock-badge-large in-stock">¡Hay stock disponible!</span>
-            <select class="stock-quantity-dropdown">
-              <% for (let i = 1; i <= Math.min(product.stock, 6); i++) { %>
-                <option value="<%= i %>">
-                  <%= i %> unidad<%= i > 1 ? 'es' : '' %> <%= i === product.stock ? '(último disponible)' : '' %>
-                </option>
-              <% } %>
-              <% if (product.stock > 6) { %>
-                <option value="more">+ de 6 unidades</option>
-              <% } %>
-            </select>
-            <span style="font-size: 12px; color: var(--ml-text-gray);">(<%= product.stock %> unidades en inventario)</span>
-          </div>
+      <!-- Estado de Stock -->
+      <div>
+        <% if (product.stock > 10) { %>
+          <span class="detail-status-badge-fb in-stock">Disponible (<%= product.stock %> unidades)</span>
+        <% } else if (product.stock > 0) { %>
+          <span class="detail-status-badge-fb few-stock">¡Últimas <%= product.stock %> unidades!</span>
         <% } else { %>
-          <div>
-            <span class="stock-badge-large out-stock">Publicación pausada (Sin Stock)</span>
-            <p class="info-text-sub" style="margin-top: 6px;">No te preocupes, el vendedor repondrá el inventario próximamente.</p>
-          </div>
+          <span class="detail-status-badge-fb out-stock">Agotado (Sin Stock)</span>
         <% } %>
       </div>
 
-      <!-- Acciones de Compra -->
-      <div class="purchase-actions">
-        <% if (product.stock > 0) { %>
-          <button type="button" class="btn-ml-primary">Comprar ahora</button>
-          <button type="button" class="btn-ml-secondary">Agregar al carrito</button>
-        <% } else { %>
-          <button type="button" class="btn-ml-secondary" style="opacity: 0.5; cursor: not-allowed;" disabled>Comprar ahora</button>
-          <button type="button" class="btn-ml-secondary" style="opacity: 0.5; cursor: not-allowed;" disabled>Agregar al carrito</button>
-        <% } %>
+      <div class="sidebar-divider-fb"></div>
+
+      <!-- Sección Descripción -->
+      <div>
+        <h3 class="detail-section-title-fb">Detalles</h3>
+        <p class="detail-description-fb">
+          <%= product.description ? product.description : 'El vendedor no proporcionó una descripción comercial detallada de este artículo.' %>
+        </p>
       </div>
 
-      <!-- Garantías -->
-      <div class="security-info-box">
-        <div class="security-info-row">
-          <i class="fa-solid fa-shield-halved"></i>
-          <p><strong>Compra Protegida</strong>, recibí el producto que esperabas o te devolvemos tu dinero.</p>
+      <div class="sidebar-divider-fb"></div>
+
+      <!-- Panel Messenger Simulado -->
+      <div class="messenger-panel-fb">
+        <div class="messenger-header-fb">
+          <i class="fa-brands fa-facebook-messenger"></i>
+          <span>Enviar mensaje al vendedor</span>
         </div>
-        <div class="security-info-row">
-          <i class="fa-solid fa-medal"></i>
-          <p><strong>Garantía GeekStore</strong> de 12 meses directamente con el fabricante.</p>
+        <div class="messenger-input-wrapper-fb">
+          <input type="text" class="messenger-input-fb" value="Hola, ¿sigue disponible?" readonly>
         </div>
+        <button type="button" class="btn-messenger-send-fb">
+          <i class="fa-solid fa-paper-plane"></i> Enviar mensaje
+        </button>
       </div>
 
-    </div>
+      <div class="sidebar-divider-fb"></div>
 
-    <!-- Reputación del Vendedor -->
-    <div class="seller-reputation-card">
-      <h3 class="seller-title">Información sobre el vendedor</h3>
-      <div class="seller-location">
-        <i class="fa-solid fa-location-dot"></i>
-        <span>Ubicación: Caracas, Distrito Capital</span>
-      </div>
-      
-      <!-- Termómetro de reputación -->
-      <div class="reputation-thermometer">
-        <div class="rep-bar red"></div>
-        <div class="rep-bar orange"></div>
-        <div class="rep-bar yellow"></div>
-        <div class="rep-bar light-green"></div>
-        <div class="rep-bar green" style="box-shadow: 0 0 0 2px var(--ml-text-dark);"></div>
+      <!-- Ubicación y Mapa Simulado -->
+      <div class="location-map-box-fb">
+        <h3 class="detail-section-title-fb">Ubicación</h3>
+        <div class="location-map-details-fb">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Caracas, Distrito Capital</span>
+        </div>
+        <div class="location-circle-map-fb">
+          <div class="map-circle-radial-fb">
+            <div class="map-pin-fb"></div>
+          </div>
+        </div>
+        <span style="font-size: 12px; color: var(--fb-text-gray); text-align: center; display: block; margin-top: 4px;">
+          La ubicación es aproximada para proteger la privacidad del vendedor.
+        </span>
       </div>
 
-      <div class="seller-stats-row">
-        <div class="seller-stat">
-          <span class="stat-value">345</span>
-          <span class="stat-label">Ventas concretadas</span>
-        </div>
-        <div class="seller-stat">
-          <span class="stat-value" style="color: var(--ml-green);"><i class="fa-regular fa-face-smile"></i></span>
-          <span class="stat-label">Brinda buena atención</span>
-        </div>
-        <div class="seller-stat">
-          <span class="stat-value" style="color: var(--ml-green);"><i class="fa-regular fa-clock"></i></span>
-          <span class="stat-label">Entrega a tiempo</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Consola de Edición del Vendedor -->
-    <div class="seller-console-card">
-      <div class="console-title">
-        <i class="fa-solid fa-screwdriver-wrench"></i> Consola del Vendedor
-      </div>
-      <p style="font-size: 12px; color: #665200; line-height: 1.3;">
-        Como administrador de GeekStore, tenés permisos especiales para gestionar esta publicación directamente.
-      </p>
-      
-      <div class="console-actions">
-        <a href="/products/<%= product.id %>/edit" class="btn-console-edit">
+      <!-- Herramientas Administrativas de Publicación (Consola del Vendedor) -->
+      <div class="admin-tools-panel-fb">
+        <h3 class="detail-section-title-fb" style="color: #665200; border-bottom-color: #ffe699;">Herramientas de Vendedor</h3>
+        
+        <a href="/products/<%= product.id %>/edit" class="btn-admin-action-fb edit">
           <i class="fa-regular fa-pen-to-square"></i> Editar publicación
         </a>
-        <form action="/products/<%= product.id %>/delete" method="POST" onsubmit="return confirm('¿De verdad querés eliminar esta publicación? Esta acción es irreversible, hermano.');" style="margin: 0;">
-          <button type="submit" class="btn-console-delete" style="width: 100%;">
-            <i class="fa-regular fa-trash-can"></i> Eliminar
+        
+        <form action="/products/<%= product.id %>/delete" method="POST" onsubmit="return confirm('¿De verdad querés eliminar esta publicación? Se perderá permanentemente del marketplace.');" style="margin: 0;">
+          <button type="submit" class="btn-admin-action-fb delete">
+            <i class="fa-regular fa-trash-can"></i> Eliminar publicación
           </button>
         </form>
       </div>
-    </div>
 
-  </div>
+    </div>
+  </aside>
 
 </div>
 

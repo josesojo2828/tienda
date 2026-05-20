@@ -1,74 +1,98 @@
-<%- include('../layouts/header', { title: 'GEEK STORE - Consolas y Videojuegos en Mercado Libre' }) %>
+<%- include('../layouts/header', { title: 'GEEK STORE | Facebook Marketplace' }) %>
 
-<div class="catalog-layout">
+<div class="catalog-layout-fb">
   
-  <!-- Sidebar de Filtros Estéticos Estilo Mercado Libre -->
-  <aside class="catalog-sidebar">
-    <div class="filter-section">
-      <h3 class="filter-title">Categorías</h3>
-      <ul class="filter-list">
-        <li class="filter-item active"><a href="/products">Accesorios para PC <span>(3)</span></a></li>
-        <li class="filter-item"><a href="#">Consolas y Videojuegos <span>(12)</span></a></li>
-        <li class="filter-item"><a href="#">Audio y Video <span>(8)</span></a></li>
-        <li class="filter-item"><a href="#">Monitores y Pantallas <span>(5)</span></a></li>
-      </ul>
-    </div>
+  <!-- Sidebar de Filtros Estilo Facebook Marketplace -->
+  <aside class="catalog-sidebar-fb">
+    <h2 class="sidebar-title-fb">Marketplace</h2>
+    
+    <!-- Botón Crear Publicación -->
+    <a href="/products/new" class="btn-fb-publish">
+      <i class="fa-solid fa-plus"></i> Crear publicación
+    </a>
+    
+    <div class="sidebar-divider-fb"></div>
 
-    <div class="filter-section">
-      <h3 class="filter-title">Costo de Envío</h3>
-      <ul class="filter-list">
-        <li class="filter-item"><a href="#"><i class="fa-solid fa-truck-fast" style="color: var(--ml-green);"></i> <strong>Envío gratis</strong> <span>(3)</span></a></li>
-      </ul>
-    </div>
-
-    <div class="filter-section">
-      <h3 class="filter-title">Condición</h3>
-      <ul class="filter-list">
-        <li class="filter-item"><a href="#">Nuevo <span>(3)</span></a></li>
-        <li class="filter-item"><a href="#">Usado <span>(0)</span></a></li>
-      </ul>
-    </div>
-
-    <div class="filter-section">
-      <h3 class="filter-title">Ubicación</h3>
-      <ul class="filter-list">
-        <li class="filter-item"><a href="#">Caracas <span>(3)</span></a></li>
-        <li class="filter-item"><a href="#">Miranda <span>(0)</span></a></li>
-        <li class="filter-item"><a href="#">Zulia <span>(0)</span></a></li>
-      </ul>
-    </div>
-
-    <div class="filter-section">
-      <h3 class="filter-title">Reputación del Vendedor</h3>
-      <div class="filter-reputation-box">
-        <div class="reputation-thermometer">
-          <div class="rep-bar red"></div>
-          <div class="rep-bar orange"></div>
-          <div class="rep-bar yellow"></div>
-          <div class="rep-bar light-green"></div>
-          <div class="rep-bar green"></div>
-        </div>
-        <p style="font-size: 11px; color: var(--ml-text-gray); margin-top: 6px;"><strong>MercadoLíder Platinum</strong><br>¡Es uno de los mejores del sitio!</p>
+    <!-- Sección Filtros -->
+    <div class="sidebar-section-fb">
+      <h3 class="sidebar-section-title-fb">Filtros</h3>
+      <div style="font-size: 14px; color: var(--fb-text-dark); display: flex; align-items: center; justify-content: space-between;">
+        <span>Ubicación</span>
+        <a href="#" style="font-weight: 600; font-size: 13px;">Caracas · 60 km</a>
       </div>
+      
+      <!-- Filtro de Precio -->
+      <form action="/products" method="GET" style="display: flex; flex-direction: column; gap: 8px;">
+        <span class="price-range-label-fb" style="font-weight: 600; margin-top: 4px;">Precio</span>
+        <div class="price-range-inputs-fb">
+          <div class="price-range-box-fb">
+            <span class="price-range-label-fb">Mín.</span>
+            <input type="number" name="minPrice" class="price-range-field-fb" placeholder="Cualquiera">
+          </div>
+          <div class="price-range-box-fb">
+            <span class="price-range-label-fb">Máx.</span>
+            <input type="number" name="maxPrice" class="price-range-field-fb" placeholder="Cualquiera">
+          </div>
+        </div>
+        <button type="submit" class="filter-apply-btn-fb">Aplicar filtros</button>
+      </form>
+    </div>
+
+    <div class="sidebar-divider-fb"></div>
+
+    <!-- Sección Categorías -->
+    <div class="sidebar-section-fb">
+      <h3 class="sidebar-section-title-fb">Categorías</h3>
+      <nav class="sidebar-menu-list-fb">
+        
+        <a href="/products" class="sidebar-menu-item-fb active">
+          <span class="menu-item-content-fb">
+            <span class="menu-icon-wrapper-fb"><i class="fa-solid fa-laptop"></i></span>
+            Accesorios para PC
+          </span>
+          <span class="menu-badge-fb">3</span>
+        </a>
+
+        <a href="#" class="sidebar-menu-item-fb">
+          <span class="menu-item-content-fb">
+            <span class="menu-icon-wrapper-fb"><i class="fa-solid fa-gamepad"></i></span>
+            Consolas y Videojuegos
+          </span>
+          <span class="menu-badge-fb">12</span>
+        </a>
+
+        <a href="#" class="sidebar-menu-item-fb">
+          <span class="menu-item-content-fb">
+            <span class="menu-icon-wrapper-fb"><i class="fa-solid fa-headphones"></i></span>
+            Audio y Video
+          </span>
+          <span class="menu-badge-fb">8</span>
+        </a>
+
+        <a href="#" class="sidebar-menu-item-fb">
+          <span class="menu-item-content-fb">
+            <span class="menu-icon-wrapper-fb"><i class="fa-solid fa-desktop"></i></span>
+            Monitores y Pantallas
+          </span>
+          <span class="menu-badge-fb">5</span>
+        </a>
+
+      </nav>
     </div>
   </aside>
 
-  <!-- Listado de Productos -->
-  <section class="catalog-main">
+  <!-- Feed de Ventas del Marketplace -->
+  <section class="catalog-main-fb">
     
-    <div class="catalog-header">
-      <div class="catalog-results-count">
-        <%= products.length %> resultados en computación y gaming
-      </div>
-      <div style="font-size: 13px; color: var(--ml-text-gray);">
-        Ordenar por: <strong>Relevancia</strong> <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
-      </div>
+    <div class="catalog-header-fb">
+      <h1 class="catalog-header-title-fb">Ofertas de hoy</h1>
+      <p class="catalog-header-subtitle-fb">Caracas, Distrito Capital · En un radio de 60 kilómetros</p>
     </div>
 
     <% if (products && products.length > 0) { %>
-      <div class="products-grid">
+      <div class="products-grid-fb">
         <% products.forEach(product => { 
-          // Selección dinámica de imagen de Unsplash según palabras clave en el nombre del producto
+          // Selección dinámica de imagen de Unsplash según palabras clave en el nombre
           let imageUrl = "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&auto=format&fit=crop&q=60"; // Default gadget
           const nameLower = product.name.toLowerCase();
           
@@ -80,62 +104,52 @@
             imageUrl = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&auto=format&fit=crop&q=60";
           }
         %>
-          <article class="product-card" onclick="window.location.href='/products/<%= product.id %>'">
+          <div class="product-card-fb" onclick="window.location.href='/products/<%= product.id %>'">
             
-            <!-- Imagen con badge de stock -->
-            <div class="product-card-image-box">
+            <!-- Imagen con badge de stock e iconos rápidos flotantes -->
+            <div class="product-card-image-box-fb">
               <% if (product.stock > 10) { %>
-                <span class="card-badge in-stock">Stock Disponible</span>
+                <span class="card-badge-fb in-stock">Disponible</span>
               <% } else if (product.stock > 0) { %>
-                <span class="card-badge few-stock">Últimas <%= product.stock %> unidades!</span>
+                <span class="card-badge-fb few-stock">¡Últimas <%= product.stock %>!</span>
               <% } else { %>
-                <span class="card-badge out-stock">Sin Stock</span>
+                <span class="card-badge-fb out-stock">Agotado</span>
               <% } %>
+              
+              <!-- Botones flotantes administrativos de Facebook -->
+              <div class="product-card-actions-fb" onclick="event.stopPropagation();">
+                <a href="/products/<%= product.id %>/edit" class="btn-card-action-fb" title="Editar publicación">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                <form action="/products/<%= product.id %>/delete" method="POST" style="display: inline;">
+                  <button type="submit" class="btn-card-action-fb delete" title="Eliminar publicación" onclick="return confirm('¿Seguro que querés eliminar esta publicación?')">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </form>
+              </div>
+
               <img src="<%= imageUrl %>" alt="<%= product.name %>">
             </div>
 
-            <!-- Información -->
-            <div class="product-card-info">
-              
-              <div class="product-card-price-row">
-                <span class="product-card-price">$ <%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
-              </div>
-              
-              <div class="product-card-shipping">
-                <i class="fa-solid fa-bolt-lightning"></i> Envío gratis
-              </div>
-
-              <h2 class="product-card-title"><%= product.name %></h2>
-              
-              <!-- Footer con botones rápidos de editar y ver -->
-              <div class="product-card-footer" onclick="event.stopPropagation();">
-                <span class="product-card-stock-text">
-                  <%= product.stock > 0 ? `${product.stock} disp.` : 'Agotado' %>
-                </span>
-                
-                <div class="product-card-actions">
-                  <a href="/products/<%= product.id %>" class="btn-card-action" title="Ver detalle">
-                    <i class="fa-regular fa-eye"></i>
-                  </a>
-                  <a href="/products/<%= product.id %>/edit" class="btn-card-action" title="Editar producto">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                  </a>
-                </div>
-              </div>
-
+            <!-- Información (Estilo Chato Marketplace) -->
+            <div class="product-card-info-fb">
+              <span class="product-card-price-fb">$<%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
+              <span class="product-card-title-fb"><%= product.name %></span>
+              <span class="product-card-location-fb">Caracas</span>
             </div>
-          </article>
+
+          </div>
         <% }) %>
       </div>
     <% } else { %>
-      <div class="catalog-empty-state">
-        <div class="catalog-empty-icon">
+      <div class="catalog-empty-state-fb">
+        <div class="catalog-empty-icon-fb">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-        <h3>No encontramos publicaciones</h3>
-        <p>Parece que no hay productos cargados en la base de datos en memoria en este momento. ¡Animate a publicar el primero!</p>
-        <a href="/products/new" class="btn-ml-primary" style="margin-top: 10px;">
-          <i class="fa-solid fa-circle-plus"></i> Publicar nuevo producto
+        <h3>No se encontraron publicaciones</h3>
+        <p>Parece que no hay productos cargados que coincidan con la búsqueda. ¡Animate a crear la primera publicación!</p>
+        <a href="/products/new" class="btn-fb-publish" style="margin-top: 10px; background-color: var(--fb-blue); color: var(--fb-white);">
+          <i class="fa-solid fa-plus"></i> Crear publicación
         </a>
       </div>
     <% } %>

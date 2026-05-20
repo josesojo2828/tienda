@@ -1,6 +1,6 @@
-<%- include('../layouts/header', { title: 'Publicar un producto - GEEK STORE' }) %>
+<%- include('../layouts/header', { title: 'Crear publicación - GEEK STORE' }) %>
 
-<div class="form-layout-centered">
+<div class="form-layout-fb">
 
   <!-- Alerta de Errores de Validación -->
   <% if (error) { %>
@@ -9,94 +9,94 @@
         <i class="fa-solid fa-triangle-exclamation"></i>
       </div>
       <div class="ml-alert-content">
-        <h4>Hubo un problema al publicar el producto</h4>
+        <h4>Error al crear la publicación</h4>
         <p><%= error %></p>
       </div>
     </div>
   <% } %>
 
-  <!-- Formulario de Creación Estilo Mercado Libre -->
-  <div class="form-card">
+  <!-- Formulario de Creación Estilo Facebook Marketplace -->
+  <div class="form-card-fb">
     
-    <div class="form-header-box">
-      <h1 class="form-header-title">Carga la información de tu producto</h1>
-      <p class="form-header-subtitle">Completa los campos detallados para que los compradores puedan encontrar tu publicación rápidamente.</p>
+    <div class="form-header-fb">
+      <h1 class="form-title-fb">Crear publicación</h1>
+      <p class="form-subtitle-fb">Carga las fotos y completa los detalles de tu artículo para publicarlo en el Marketplace.</p>
     </div>
 
     <form action="/products" method="POST" autocomplete="off">
-      <div class="form-grid">
+      <div class="form-body-fb">
         
         <!-- Nombre del Producto -->
-        <div class="form-group">
-          <label for="name" class="form-label">Título de la publicación *</label>
+        <div class="form-group-fb">
+          <label for="name" class="form-label-fb">Título *</label>
           <input 
             type="text" 
             id="name" 
             name="name" 
-            class="form-control-input" 
-            placeholder="Ej. Silla Gamer RGB Ergonómica Elite" 
+            class="form-control-fb" 
+            placeholder="¿Qué estás vendiendo?" 
             value="<%= product.name || '' %>"
             required
             minlength="3"
           >
-          <span class="form-help-text">Evita incluir precios, promociones o datos de contacto en el título.</span>
         </div>
 
         <!-- Fila de Precio y Stock -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <!-- Precio -->
-          <div class="form-group">
-            <label for="price" class="form-label">Precio de venta ($ USD) *</label>
+          <div class="form-group-fb">
+            <label for="price" class="form-label-fb">Precio ($ USD) *</label>
             <input 
               type="number" 
               id="price" 
               name="price" 
-              class="form-control-input" 
+              class="form-control-fb" 
               placeholder="0.00" 
               step="0.01" 
               min="0.01" 
               value="<%= product.price || '' %>"
               required
             >
-            <span class="form-help-text">Elige un precio competitivo.</span>
           </div>
 
           <!-- Stock -->
-          <div class="form-group">
-            <label for="stock" class="form-label">Cantidad disponible (Stock) *</label>
+          <div class="form-group-fb">
+            <label for="stock" class="form-label-fb">Cantidad (Stock) *</label>
             <input 
               type="number" 
               id="stock" 
               name="stock" 
-              class="form-control-input" 
-              placeholder="Ej. 10" 
+              class="form-control-fb" 
+              placeholder="Ej. 1" 
               step="1" 
               min="0" 
               value="<%= product.stock !== undefined ? product.stock : '' %>"
               required
             >
-            <span class="form-help-text">Stock inicial para la venta.</span>
           </div>
         </div>
 
         <!-- Descripción -->
-        <div class="form-group">
-          <label for="description" class="form-label">Descripción detallada</label>
+        <div class="form-group-fb">
+          <label for="description" class="form-label-fb">Descripción</label>
           <textarea 
             id="description" 
             name="description" 
-            class="form-control-textarea" 
-            placeholder="Describe las especificaciones técnicas del producto, garantía, color, dimensiones, etc..."
+            class="form-control-fb" 
+            placeholder="Describe el estado de tu artículo, especificaciones técnicas o cualquier detalle relevante."
           ><%= product.description || '' %></textarea>
-          <span class="form-help-text">Una buena descripción ayuda a despejar dudas y acelerar tus ventas.</span>
+        </div>
+
+        <!-- Ubicación Simulada Fija -->
+        <div class="form-group-fb" style="background-color: var(--fb-input-bg); border-color: transparent;">
+          <label class="form-label-fb">Ubicación del artículo</label>
+          <input type="text" class="form-control-fb" value="Caracas, Distrito Capital" style="color: var(--fb-text-gray); cursor: not-allowed;" readonly>
         </div>
 
         <!-- Botones de Acción -->
-        <div class="form-actions-row">
-          <a href="/products" class="btn-ml-link">Cancelar</a>
-          <button type="submit" class="btn-ml-primary">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Confirmar y publicar
-          </button>
+        <div class="form-actions-fb">
+          <a href="/products" class="btn-form-cancel-fb">Cancelar</a>
+          <button type="submit" class="btn-form-submit-fb">Publicar artículo</button>
         </div>
 
       </div>

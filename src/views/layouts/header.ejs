@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= typeof title !== 'undefined' ? title : 'GEEK STORE | Mercado Libre' %></title>
+  <title><%= typeof title !== 'undefined' ? title : 'GEEK STORE | Facebook Marketplace' %></title>
   <!-- Google Fonts: Inter para texto y Outfit para logo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,76 +15,53 @@
 </head>
 <body>
 
-  <!-- Header Estilo Mercado Libre -->
-  <header class="ml-header">
-    <div class="header-container">
+  <!-- Header Estilo Facebook Marketplace -->
+  <header class="fb-header">
+    <div class="header-container-fb">
       
-      <!-- Fila Superior -->
-      <div class="header-top-row">
-        <!-- Logo -->
-        <div class="logo-container">
-          <a href="/products">
-            <div class="logo-main">GEEK<span>STORE</span></div>
-            <div class="logo-sub">Mercado Libre Partner</div>
-          </a>
-        </div>
-
-        <!-- Buscador -->
-        <form class="search-form" action="/products" method="GET">
-          <div class="search-input-wrapper">
-            <input 
-              type="text" 
-              name="search" 
-              class="search-input" 
-              placeholder="Buscar productos, marcas y más..." 
-              value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
-              autocomplete="off"
-            >
-            <button type="submit" class="search-button">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
-        </form>
-
-        <!-- Menú de Usuario -->
-        <div class="header-user-menu">
-          <a href="#"><i class="fa-regular fa-bell"></i></a>
-          <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-          <a href="#">Ingresá</a>
-          <a href="#">Creá tu cuenta</a>
-          <a href="#">Mis compras</a>
+      <!-- Lado Izquierdo: Logo y Badge -->
+      <div class="header-left">
+        <a href="/products" class="logo-fb">GEEKSTORE</a>
+        <div class="badge-marketplace">
+          <i class="fa-solid fa-store"></i>
+          <span>Marketplace</span>
         </div>
       </div>
 
-      <!-- Fila Inferior -->
-      <div class="header-bottom-row">
-        <!-- Navegación Izquierda -->
-        <div class="header-nav-left">
-          <!-- Ubicación Estética -->
-          <div class="header-location">
-            <i class="fa-solid fa-location-dot"></i>
-            <div class="loc-text">
-              <span class="loc-sub">Enviar a</span>
-              <span class="loc-main">Caracas, DF</span>
-            </div>
-          </div>
-
-          <!-- Enlaces de Navegación -->
-          <nav class="header-menu-links">
-            <a href="/products" class="active">Categorías</a>
-            <a href="#">Ofertas</a>
-            <a href="#">Historial</a>
-            <a href="#">Supermercado</a>
-            <a href="#">Moda</a>
-            <a href="#">Ayuda / Soporte</a>
-          </nav>
+      <!-- Centro: Buscador -->
+      <form class="search-form-fb" action="/products" method="GET">
+        <div class="search-input-wrapper-fb">
+          <i class="fa-solid fa-magnifying-glass search-icon-fb"></i>
+          <input 
+            type="text" 
+            name="search" 
+            class="search-input-fb" 
+            placeholder="Buscar en Marketplace..." 
+            value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+            autocomplete="off"
+          >
+          <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+            <button type="button" class="search-clear-btn-fb" onclick="window.location.href='/products'">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          <% } %>
         </div>
+      </form>
 
-        <!-- Acción Destacada -->
-        <div class="header-nav-right">
-          <a href="/products/new" class="btn-header-publish">
-            <i class="fa-solid fa-circle-plus"></i> Publicar Producto
-          </a>
+      <!-- Lado Derecho: Iconos Rápidos y Perfil -->
+      <div class="header-right">
+        <!-- Notificaciones -->
+        <button class="header-icon-btn" title="Notificaciones">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <!-- Carrito -->
+        <button class="header-icon-btn" title="Carrito de compras">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+        <!-- Perfil Simulado -->
+        <div class="header-user-profile" title="Tu perfil de Facebook">
+          <i class="fa-solid fa-circle-user"></i>
+          <span>Vendedor</span>
         </div>
       </div>
 
@@ -92,5 +69,5 @@
   </header>
 
   <!-- Contenedor Principal de Contenido -->
-  <div class="container">
+  <div class="container-fluid">
     <main>
