@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'GEEK STORE | Mercado Libre' %></title>
+  <!-- Google Fonts: Inter para texto y Outfit para logo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@800&display=swap" rel="stylesheet">
+  <!-- FontAwesome para iconos clásicos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Estilos Globales -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Header Estilo Mercado Libre -->
+  <header class="ml-header">
+    <div class="header-container">
+      
+      <!-- Fila Superior -->
+      <div class="header-top-row">
+        <!-- Logo -->
+        <div class="logo-container">
+          <a href="/products">
+            <div class="logo-main">GEEK<span>STORE</span></div>
+            <div class="logo-sub">Mercado Libre Partner</div>
+          </a>
+        </div>
+
+        <!-- Buscador -->
+        <form class="search-form" action="/products" method="GET">
+          <div class="search-input-wrapper">
+            <input 
+              type="text" 
+              name="search" 
+              class="search-input" 
+              placeholder="Buscar productos, marcas y más..." 
+              value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+              autocomplete="off"
+            >
+            <button type="submit" class="search-button">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Menú de Usuario -->
+        <div class="header-user-menu">
+          <a href="#"><i class="fa-regular fa-bell"></i></a>
+          <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+          <a href="#">Ingresá</a>
+          <a href="#">Creá tu cuenta</a>
+          <a href="#">Mis compras</a>
+        </div>
+      </div>
+
+      <!-- Fila Inferior -->
+      <div class="header-bottom-row">
+        <!-- Navegación Izquierda -->
+        <div class="header-nav-left">
+          <!-- Ubicación Estética -->
+          <div class="header-location">
+            <i class="fa-solid fa-location-dot"></i>
+            <div class="loc-text">
+              <span class="loc-sub">Enviar a</span>
+              <span class="loc-main">Caracas, DF</span>
+            </div>
+          </div>
+
+          <!-- Enlaces de Navegación -->
+          <nav class="header-menu-links">
+            <a href="/products" class="active">Categorías</a>
+            <a href="#">Ofertas</a>
+            <a href="#">Historial</a>
+            <a href="#">Supermercado</a>
+            <a href="#">Moda</a>
+            <a href="#">Ayuda / Soporte</a>
+          </nav>
+        </div>
+
+        <!-- Acción Destacada -->
+        <div class="header-nav-right">
+          <a href="/products/new" class="btn-header-publish">
+            <i class="fa-solid fa-circle-plus"></i> Publicar Producto
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Contenedor Principal de Contenido -->
+  <div class="container">
+    <main>

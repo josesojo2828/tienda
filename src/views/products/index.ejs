@@ -1,0 +1,147 @@
+<%- include('../layouts/header', { title: 'GEEK STORE - Consolas y Videojuegos en Mercado Libre' }) %>
+
+<div class="catalog-layout">
+  
+  <!-- Sidebar de Filtros Estéticos Estilo Mercado Libre -->
+  <aside class="catalog-sidebar">
+    <div class="filter-section">
+      <h3 class="filter-title">Categorías</h3>
+      <ul class="filter-list">
+        <li class="filter-item active"><a href="/products">Accesorios para PC <span>(3)</span></a></li>
+        <li class="filter-item"><a href="#">Consolas y Videojuegos <span>(12)</span></a></li>
+        <li class="filter-item"><a href="#">Audio y Video <span>(8)</span></a></li>
+        <li class="filter-item"><a href="#">Monitores y Pantallas <span>(5)</span></a></li>
+      </ul>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-title">Costo de Envío</h3>
+      <ul class="filter-list">
+        <li class="filter-item"><a href="#"><i class="fa-solid fa-truck-fast" style="color: var(--ml-green);"></i> <strong>Envío gratis</strong> <span>(3)</span></a></li>
+      </ul>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-title">Condición</h3>
+      <ul class="filter-list">
+        <li class="filter-item"><a href="#">Nuevo <span>(3)</span></a></li>
+        <li class="filter-item"><a href="#">Usado <span>(0)</span></a></li>
+      </ul>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-title">Ubicación</h3>
+      <ul class="filter-list">
+        <li class="filter-item"><a href="#">Caracas <span>(3)</span></a></li>
+        <li class="filter-item"><a href="#">Miranda <span>(0)</span></a></li>
+        <li class="filter-item"><a href="#">Zulia <span>(0)</span></a></li>
+      </ul>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-title">Reputación del Vendedor</h3>
+      <div class="filter-reputation-box">
+        <div class="reputation-thermometer">
+          <div class="rep-bar red"></div>
+          <div class="rep-bar orange"></div>
+          <div class="rep-bar yellow"></div>
+          <div class="rep-bar light-green"></div>
+          <div class="rep-bar green"></div>
+        </div>
+        <p style="font-size: 11px; color: var(--ml-text-gray); margin-top: 6px;"><strong>MercadoLíder Platinum</strong><br>¡Es uno de los mejores del sitio!</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Listado de Productos -->
+  <section class="catalog-main">
+    
+    <div class="catalog-header">
+      <div class="catalog-results-count">
+        <%= products.length %> resultados en computación y gaming
+      </div>
+      <div style="font-size: 13px; color: var(--ml-text-gray);">
+        Ordenar por: <strong>Relevancia</strong> <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+      </div>
+    </div>
+
+    <% if (products && products.length > 0) { %>
+      <div class="products-grid">
+        <% products.forEach(product => { 
+          // Selección dinámica de imagen de Unsplash según palabras clave en el nombre del producto
+          let imageUrl = "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&auto=format&fit=crop&q=60"; // Default gadget
+          const nameLower = product.name.toLowerCase();
+          
+          if (nameLower.includes('silla')) {
+            imageUrl = "https://images.unsplash.com/photo-1598550476439-6847785fce6e?w=500&auto=format&fit=crop&q=60";
+          } else if (nameLower.includes('teclado')) {
+            imageUrl = "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500&auto=format&fit=crop&q=60";
+          } else if (nameLower.includes('monitor')) {
+            imageUrl = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&auto=format&fit=crop&q=60";
+          }
+        %>
+          <article class="product-card" onclick="window.location.href='/products/<%= product.id %>'">
+            
+            <!-- Imagen con badge de stock -->
+            <div class="product-card-image-box">
+              <% if (product.stock > 10) { %>
+                <span class="card-badge in-stock">Stock Disponible</span>
+              <% } else if (product.stock > 0) { %>
+                <span class="card-badge few-stock">Últimas <%= product.stock %> unidades!</span>
+              <% } else { %>
+                <span class="card-badge out-stock">Sin Stock</span>
+              <% } %>
+              <img src="<%= imageUrl %>" alt="<%= product.name %>">
+            </div>
+
+            <!-- Información -->
+            <div class="product-card-info">
+              
+              <div class="product-card-price-row">
+                <span class="product-card-price">$ <%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
+              </div>
+              
+              <div class="product-card-shipping">
+                <i class="fa-solid fa-bolt-lightning"></i> Envío gratis
+              </div>
+
+              <h2 class="product-card-title"><%= product.name %></h2>
+              
+              <!-- Footer con botones rápidos de editar y ver -->
+              <div class="product-card-footer" onclick="event.stopPropagation();">
+                <span class="product-card-stock-text">
+                  <%= product.stock > 0 ? `${product.stock} disp.` : 'Agotado' %>
+                </span>
+                
+                <div class="product-card-actions">
+                  <a href="/products/<%= product.id %>" class="btn-card-action" title="Ver detalle">
+                    <i class="fa-regular fa-eye"></i>
+                  </a>
+                  <a href="/products/<%= product.id %>/edit" class="btn-card-action" title="Editar producto">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="catalog-empty-state">
+        <div class="catalog-empty-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <h3>No encontramos publicaciones</h3>
+        <p>Parece que no hay productos cargados en la base de datos en memoria en este momento. ¡Animate a publicar el primero!</p>
+        <a href="/products/new" class="btn-ml-primary" style="margin-top: 10px;">
+          <i class="fa-solid fa-circle-plus"></i> Publicar nuevo producto
+        </a>
+      </div>
+    <% } %>
+
+  </section>
+
+</div>
+
+<%- include('../layouts/footer') %>

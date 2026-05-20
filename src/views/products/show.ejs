@@ -1,0 +1,188 @@
+<%- include('../layouts/header', { title: product.name + ' - GEEK STORE' }) %>
+
+<!-- Migas de Pan Estilo Mercado Libre -->
+<div style="font-size: 13px; color: var(--ml-text-gray); margin-bottom: 20px;">
+  <a href="/products" style="color: var(--ml-text-gray);">Volver al listado</a> 
+  <span style="color: var(--ml-text-light); margin: 0 8px;">|</span>
+  <a href="#" style="color: var(--ml-text-gray);">Computación</a> > 
+  <a href="#" style="color: var(--ml-text-gray);">Accesorios para PC</a> > 
+  <span style="color: var(--ml-text-dark); font-weight: 500;"><%= product.name %></span>
+</div>
+
+<div class="product-detail-card">
+  
+  <!-- Columna Izquierda: Galería y Descripción del Vendedor -->
+  <div class="detail-left-column">
+    
+    <% 
+      // Selección dinámica de la misma imagen de Unsplash según palabras clave en el nombre del producto
+      let imageUrl = "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&auto=format&fit=crop&q=60";
+      const nameLower = product.name.toLowerCase();
+      if (nameLower.includes('silla')) {
+        imageUrl = "https://images.unsplash.com/photo-1598550476439-6847785fce6e?w=800&auto=format&fit=crop&q=60";
+      } else if (nameLower.includes('teclado')) {
+        imageUrl = "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&auto=format&fit=crop&q=60";
+      } else if (nameLower.includes('monitor')) {
+        imageUrl = "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=60";
+      }
+    %>
+    <!-- Contenedor de la Imagen Principal -->
+    <div class="detail-gallery-box">
+      <img src="<%= imageUrl %>" alt="<%= product.name %>">
+    </div>
+
+    <!-- Descripción Comercial -->
+    <div class="detail-description-section">
+      <h2 class="detail-description-title">Descripción</h2>
+      <p class="detail-description-text">
+        <%= product.description ? product.description : 'El vendedor no proporcionó una descripción comercial detallada de este artículo.' %>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Columna Derecha: Caja de Compra y Reputación del Vendedor -->
+  <div class="detail-right-column">
+    
+    <!-- Caja de Compra -->
+    <div class="purchase-box">
+      <div class="purchase-state">
+        Nuevo | +100 vendidos
+      </div>
+      
+      <h1 class="purchase-title"><%= product.name %></h1>
+      
+      <div class="purchase-price-box">
+        <span class="purchase-price">$ <%= product.price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span>
+        <div class="purchase-price-installments">
+          en <span>12x $ <%= (product.price / 12).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span> sin interés
+        </div>
+      </div>
+
+      <!-- Envío e Información de Devolución -->
+      <div class="purchase-info-row shipping">
+        <i class="fa-solid fa-truck-fast"></i>
+        <div>
+          <span class="info-text-main">Envío gratis a todo el país</span>
+          <p class="info-text-sub">Conocé los tiempos y las formas de envío.</p>
+        </div>
+      </div>
+
+      <div class="purchase-info-row return">
+        <i class="fa-solid fa-rotate-left"></i>
+        <div>
+          <span class="info-text-main">Devolución gratis</span>
+          <p class="info-text-sub">Tenés 30 días desde que lo recibís para devolverlo.</p>
+        </div>
+      </div>
+
+      <!-- Control de Stock -->
+      <div class="stock-selector-container">
+        <span class="stock-selector-label">Stock disponible:</span>
+        <% if (product.stock > 0) { %>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span class="stock-badge-large in-stock">¡Hay stock disponible!</span>
+            <select class="stock-quantity-dropdown">
+              <% for (let i = 1; i <= Math.min(product.stock, 6); i++) { %>
+                <option value="<%= i %>">
+                  <%= i %> unidad<%= i > 1 ? 'es' : '' %> <%= i === product.stock ? '(último disponible)' : '' %>
+                </option>
+              <% } %>
+              <% if (product.stock > 6) { %>
+                <option value="more">+ de 6 unidades</option>
+              <% } %>
+            </select>
+            <span style="font-size: 12px; color: var(--ml-text-gray);">(<%= product.stock %> unidades en inventario)</span>
+          </div>
+        <% } else { %>
+          <div>
+            <span class="stock-badge-large out-stock">Publicación pausada (Sin Stock)</span>
+            <p class="info-text-sub" style="margin-top: 6px;">No te preocupes, el vendedor repondrá el inventario próximamente.</p>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- Acciones de Compra -->
+      <div class="purchase-actions">
+        <% if (product.stock > 0) { %>
+          <button type="button" class="btn-ml-primary">Comprar ahora</button>
+          <button type="button" class="btn-ml-secondary">Agregar al carrito</button>
+        <% } else { %>
+          <button type="button" class="btn-ml-secondary" style="opacity: 0.5; cursor: not-allowed;" disabled>Comprar ahora</button>
+          <button type="button" class="btn-ml-secondary" style="opacity: 0.5; cursor: not-allowed;" disabled>Agregar al carrito</button>
+        <% } %>
+      </div>
+
+      <!-- Garantías -->
+      <div class="security-info-box">
+        <div class="security-info-row">
+          <i class="fa-solid fa-shield-halved"></i>
+          <p><strong>Compra Protegida</strong>, recibí el producto que esperabas o te devolvemos tu dinero.</p>
+        </div>
+        <div class="security-info-row">
+          <i class="fa-solid fa-medal"></i>
+          <p><strong>Garantía GeekStore</strong> de 12 meses directamente con el fabricante.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Reputación del Vendedor -->
+    <div class="seller-reputation-card">
+      <h3 class="seller-title">Información sobre el vendedor</h3>
+      <div class="seller-location">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Ubicación: Caracas, Distrito Capital</span>
+      </div>
+      
+      <!-- Termómetro de reputación -->
+      <div class="reputation-thermometer">
+        <div class="rep-bar red"></div>
+        <div class="rep-bar orange"></div>
+        <div class="rep-bar yellow"></div>
+        <div class="rep-bar light-green"></div>
+        <div class="rep-bar green" style="box-shadow: 0 0 0 2px var(--ml-text-dark);"></div>
+      </div>
+
+      <div class="seller-stats-row">
+        <div class="seller-stat">
+          <span class="stat-value">345</span>
+          <span class="stat-label">Ventas concretadas</span>
+        </div>
+        <div class="seller-stat">
+          <span class="stat-value" style="color: var(--ml-green);"><i class="fa-regular fa-face-smile"></i></span>
+          <span class="stat-label">Brinda buena atención</span>
+        </div>
+        <div class="seller-stat">
+          <span class="stat-value" style="color: var(--ml-green);"><i class="fa-regular fa-clock"></i></span>
+          <span class="stat-label">Entrega a tiempo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consola de Edición del Vendedor -->
+    <div class="seller-console-card">
+      <div class="console-title">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Consola del Vendedor
+      </div>
+      <p style="font-size: 12px; color: #665200; line-height: 1.3;">
+        Como administrador de GeekStore, tenés permisos especiales para gestionar esta publicación directamente.
+      </p>
+      
+      <div class="console-actions">
+        <a href="/products/<%= product.id %>/edit" class="btn-console-edit">
+          <i class="fa-regular fa-pen-to-square"></i> Editar publicación
+        </a>
+        <form action="/products/<%= product.id %>/delete" method="POST" onsubmit="return confirm('¿De verdad querés eliminar esta publicación? Esta acción es irreversible, hermano.');" style="margin: 0;">
+          <button type="submit" class="btn-console-delete" style="width: 100%;">
+            <i class="fa-regular fa-trash-can"></i> Eliminar
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<%- include('../layouts/footer') %>

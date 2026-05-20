@@ -1,0 +1,109 @@
+<%- include('../layouts/header', { title: 'Publicar un producto - GEEK STORE' }) %>
+
+<div class="form-layout-centered">
+
+  <!-- Alerta de Errores de Validación -->
+  <% if (error) { %>
+    <div class="ml-alert">
+      <div class="ml-alert-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div class="ml-alert-content">
+        <h4>Hubo un problema al publicar el producto</h4>
+        <p><%= error %></p>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- Formulario de Creación Estilo Mercado Libre -->
+  <div class="form-card">
+    
+    <div class="form-header-box">
+      <h1 class="form-header-title">Carga la información de tu producto</h1>
+      <p class="form-header-subtitle">Completa los campos detallados para que los compradores puedan encontrar tu publicación rápidamente.</p>
+    </div>
+
+    <form action="/products" method="POST" autocomplete="off">
+      <div class="form-grid">
+        
+        <!-- Nombre del Producto -->
+        <div class="form-group">
+          <label for="name" class="form-label">Título de la publicación *</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            class="form-control-input" 
+            placeholder="Ej. Silla Gamer RGB Ergonómica Elite" 
+            value="<%= product.name || '' %>"
+            required
+            minlength="3"
+          >
+          <span class="form-help-text">Evita incluir precios, promociones o datos de contacto en el título.</span>
+        </div>
+
+        <!-- Fila de Precio y Stock -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- Precio -->
+          <div class="form-group">
+            <label for="price" class="form-label">Precio de venta ($ USD) *</label>
+            <input 
+              type="number" 
+              id="price" 
+              name="price" 
+              class="form-control-input" 
+              placeholder="0.00" 
+              step="0.01" 
+              min="0.01" 
+              value="<%= product.price || '' %>"
+              required
+            >
+            <span class="form-help-text">Elige un precio competitivo.</span>
+          </div>
+
+          <!-- Stock -->
+          <div class="form-group">
+            <label for="stock" class="form-label">Cantidad disponible (Stock) *</label>
+            <input 
+              type="number" 
+              id="stock" 
+              name="stock" 
+              class="form-control-input" 
+              placeholder="Ej. 10" 
+              step="1" 
+              min="0" 
+              value="<%= product.stock !== undefined ? product.stock : '' %>"
+              required
+            >
+            <span class="form-help-text">Stock inicial para la venta.</span>
+          </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="description" class="form-label">Descripción detallada</label>
+          <textarea 
+            id="description" 
+            name="description" 
+            class="form-control-textarea" 
+            placeholder="Describe las especificaciones técnicas del producto, garantía, color, dimensiones, etc..."
+          ><%= product.description || '' %></textarea>
+          <span class="form-help-text">Una buena descripción ayuda a despejar dudas y acelerar tus ventas.</span>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="form-actions-row">
+          <a href="/products" class="btn-ml-link">Cancelar</a>
+          <button type="submit" class="btn-ml-primary">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Confirmar y publicar
+          </button>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+<%- include('../layouts/footer') %>
